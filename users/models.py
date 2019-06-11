@@ -1,17 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from PIL import Image
 
 # Create your models here.
 
 class BaseUser(AbstractUser):
     fullname = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
-    phone_number = models.IntegerField()
+    phone_number = models.IntegerField(null=True)
     email_address = models.EmailField()
     image = models.ImageField(default='default_profile_picture.jpg', upload_to='project_pics')
 
     def __str__(self):
-        return f'{self.user.username}'
+        return f'{self.username}'
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -49,16 +50,16 @@ class ProfessionalUser(models.Model):
         return f'{self.user.username} Professional'
 
 
-class ClientProfile(models.Model):
-    client_profile = models.OneToOneField(ClientUser, on_delete=models.CASCADE)
+# class ClientProfile(models.Model):
+#     client_profile = models.OneToOneField(ClientUser, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f'{self.user.username} Client Profile'
+#     def __str__(self):
+#         return f'{self.user.username} Client Profile'
 
 
 
-class ProfessionalProfile(models.Model):
-    professional_profile = models.OneToOneField(ProfessionalUser, on_delete=models.CASCADE)
+# class ProfessionalProfile(models.Model):
+#     professional_profile = models.OneToOneField(ProfessionalUser, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f'{self.user.username} Professional Profile'
+#     def __str__(self):
+#         return f'{self.user.username} Professional Profile'
