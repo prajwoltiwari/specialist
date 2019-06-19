@@ -1,5 +1,5 @@
 from django.contrib.auth import login, authenticate
-from .forms import UserRegistrationFrom, UserDetailUpdateForm
+from .forms import UserRegistrationFrom, UserDetailUpdateForm, ClientUserRegistrationFrom, ProfessionalUserRegistrationFrom
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from django.views.generic import ListView, UpdateView
@@ -12,10 +12,41 @@ class UserRegistrationView(FormView):
 
     def form_valid(self, form):
         form.save()
+        # a=AdminUser.objects.create(user=user,is-client=True)
         username = form.cleaned_data.get('username')
         raw_password = form.cleaned_data.get('password1')
         user = authenticate(username = username, password = 'password1')
-        login(request, user)
+        login(self.request, user)
+        return redirect('home')
+
+
+class ClientUserRegistrationView(FormView):
+    model = BaseUser
+    form_class = ClientUserRegistrationFrom
+    template_name = 'users/client_register.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'client'
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
+
+
+class ProfessionalUserRegistrationView(FormView):
+    model = BaseUser
+    form_class = ProfessionalUserRegistrationFrom'
+    template_name = 'users/professional_register.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'professional'
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
         return redirect('home')
 
 

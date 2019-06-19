@@ -5,38 +5,45 @@ from PIL import Image
 
 # Create your models here.
 class MyUserManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, password=None):
-        if not email:
-            raise ValueError('Users must have an email address')
-        user = self.model(
-            email=self.normalize_email(email),
-            date_of_birth=date_of_birth,
-        )
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
+    def _create_user(self, email, password, **extra_fields):
+       """Create and save a User with the given email and password."""
+       if not email:
+           pass
+       email = self.normalize_email(email)
+       user = self.model(email=email, **extra_fields)
+       user.set_password(password)
+       user.save(using=self._db)
 
-    def create_superuser(self, email, date_of_birth, password):
-        user = self.create_user(
-            email,
-            password=password,
-            date_of_birth=date_of_birth,
-        )
-        user.is_admin = True
-        user.save(using=self._db)
-        return user
+       return user
+
+    def create_user(self, email, password=None, **extra_fields):
+       """Create and save a regular User with the given email and password."""
+       extra_fields.setdefault('is_staff', False)
+       extra_fields.setdefault('is_superuser', False)
+       return self._create_user(email, password, **extra_fields)
+
+    def create_superuser(self, email, password, **extra_fields):
+       extra_fields.setdefault('is_staff', True)
+       extra_fields.setdefault('is_superuser', True)
+       if extra_fields.get('is_staff') is not True:
+           raise ValueError('Superuser must have is_staff=True.')
+       if extra_fields.get('is_superuser') is not True:
+           raise ValueError('Superuser must have is_superuser=True.')
+
+       return self._create_user(email, password, **extra_fields)
 
 class BaseUser(AbstractUser):
-    fullname = models.CharField(max_length=100, unique = True)
+    fullname = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
     phone_number = models.IntegerField(null=True)
     email_address = models.EmailField()
     image = models.ImageField(default='default_profile_picture.jpg', upload_to='project_pics')
 
+    is_client = models.BooleanField(default=False)
+    is_professional = models.BooleanField(default=False)
+
     objects = MyUserManager()
 
-    USERNAME_FIELD = 'fullname'
-    REQUIRED_FIELDS = ['address', 'email_address']
 
     def __str__(self):
         return f'{self.username}'
@@ -53,14 +60,14 @@ class BaseUser(AbstractUser):
 
 class ClientUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name = 'client', primary_key=True)
-    is_client = models.BooleanField(default=False)
+    # is_client = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.user.username} Client'
 
 class ProfessionalUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name = 'professional', primary_key=True)
-    is_professional = models.BooleanField(default=False)
+    # is_professional = models.BooleanField(default=False)
     AREA_OF_EXPERTISE_CHOICE = (
         ('doctor', 'doctor'),
         ('lawyer', 'lawyer'),
