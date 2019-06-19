@@ -23,13 +23,6 @@ class ClientUserRegistrationFrom(UserCreationForm):
         model = get_user_model()
         fields = ('username', 'email', 'password1', 'password2',)
 
-    # @transaction.atomic
-    def save(self):
-        user = super().save(commit=False)
-        user.is_client = True
-        user.save()
-        client = ClientUser.objects.create(user=user)
-
 
 class ProfessionalUserRegistrationFrom(UserCreationForm):
     # first_name = forms.CharField(max_length = 30, required = False, help_text = 'Optional')
@@ -43,8 +36,8 @@ class ProfessionalUserRegistrationFrom(UserCreationForm):
         ('home_tuition', 'home_tuition'),
         ('programmer', 'programmer')
     )
-    area_of_expertise = forms.CharField(max_length=20, choices=AREA_OF_EXPERTISE_CHOICE, default=None)
-    area_of_specialization = forms.CharField(blank=True)
+    area_of_expertise = forms.CharField(max_length=20)
+    area_of_specialization = forms.CharField()
     professional_license = forms.FileField()
     class Meta:
         model = get_user_model()
