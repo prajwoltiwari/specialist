@@ -36,22 +36,22 @@ class ProfessionalUserRegistrationFrom(UserCreationForm):
         ('home_tuition', 'home_tuition'),
         ('programmer', 'programmer')
     )
-    area_of_expertise = forms.CharField(max_length=20)
-    area_of_specialization = forms.CharField()
-    professional_license = forms.FileField()
+    area_of_expertise = forms.ChoiceField(choices = AREA_OF_EXPERTISE_CHOICE)
+    area_of_specialization = forms.CharField(required = False)
+    professional_license = forms.FileField(required = True)
     class Meta:
         model = get_user_model()
-        fields = ('username', 'email', 'password1', 'password2',)
+        fields = ('username', 'email', 'password1', 'password2', 'area_of_expertise', 'area_of_specialization', 'professional_license')
         
-    @transaction.atomic
-    def save(self):
-        user = super().save(commit=False)
-        user.is_professional = True
-        user.save()
-        professional = ProfessionalUser.objects.create(user=user)
-        professional.area_of_expertise.add(self.cleaned_data.get('area_of_expertise'))
-        professional.area_of_specialization.add(self.cleaned_data.get('area_of_specialization'))
-        professional.professional_license.add(self.cleaned_data.get('professional_license'))
+    # @transaction.atomic
+    # def save(self):
+    #     user = super().save(commit=False)
+    #     user.is_professional = True
+    #     user.save()
+    #     professional = ProfessionalUser.objects.create(user=user)
+    #     professional.area_of_expertise.add(self.cleaned_data.get('area_of_expertise'))
+    #     professional.area_of_specialization.add(self.cleaned_data.get('area_of_specialization'))
+    #     professional.professional_license.add(self.cleaned_data.get('professional_license'))
 
 
 class UserDetailUpdateForm(forms.ModelForm):

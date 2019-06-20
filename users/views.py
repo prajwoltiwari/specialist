@@ -30,7 +30,6 @@ class ClientUserRegistrationView(FormView):
         user = form.save()
         user.is_client = True
         user.save()
-        print(user)
         client = ClientUser.objects.create(user=user)
         client.save()
         login(self.request, user)
@@ -42,12 +41,16 @@ class ProfessionalUserRegistrationView(FormView):
     form_class = ProfessionalUserRegistrationFrom
     template_name = 'users/professional_register.html'
 
-    def get_context_data(self, **kwargs):
-        kwargs['user_type'] = 'professional'
-        return super().get_context_data(**kwargs)
+    # def get_context_data(self, **kwargs):
+    #     kwargs['user_type'] = 'professional'
+    #     return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
         user = form.save()
+        user.is_professional = True
+        user.save()
+        professional = ProfessionalUser.objects.create(user=user)
+        professional.save()
         login(self.request, user)
         return redirect('home')
 
