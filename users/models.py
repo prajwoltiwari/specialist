@@ -66,7 +66,7 @@ class ClientUser(models.Model):
         return f'{self.user.username} Client'
 
 class ProfessionalUser(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name = 'professional', primary_key=True)
+    user = models.OneToOneField(BaseUser, on_delete=models.CASCADE, related_name = 'professional', primary_key=True)
     # is_professional = models.BooleanField(default=False)
     AREA_OF_EXPERTISE_CHOICE = (
         ('doctor', 'doctor'),
@@ -76,9 +76,9 @@ class ProfessionalUser(models.Model):
         ('home_tuition', 'home_tuition'),
         ('programmer', 'programmer')
     )
-    area_of_expertise = models.CharField(max_length=20, choices=AREA_OF_EXPERTISE_CHOICE, default=None)
+    area_of_expertise = models.CharField(max_length=20, choices=AREA_OF_EXPERTISE_CHOICE, default='doctor')
     area_of_specialization = models.TextField(blank=True)
-    professional_license = models.FileField(upload_to='license_files')
+    professional_license = models.ImageField(upload_to='license_files')
 
     def __str__(self):
         return f'{self.user.username} Professional'

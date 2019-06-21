@@ -28,6 +28,8 @@ class ProfessionalUserRegistrationFrom(UserCreationForm):
     # first_name = forms.CharField(max_length = 30, required = False, help_text = 'Optional')
     # last_name = forms.CharField(max_length = 30, required = False, help_text = 'Optional')
     # email = forms.EmailField(max_length = 256, help_text = 'Required Field. Please enter a valid email address.')
+    # fullname = forms.CharField(max_length = 30, required = False, help_text = 'Optional')
+    # email = forms.EmailField(max_length = 256, help_text = 'Required Field. Please enter a valid email address.')
     AREA_OF_EXPERTISE_CHOICE = (
         ('doctor', 'doctor'),
         ('lawyer', 'lawyer'),
@@ -38,7 +40,9 @@ class ProfessionalUserRegistrationFrom(UserCreationForm):
     )
     area_of_expertise = forms.ChoiceField(choices = AREA_OF_EXPERTISE_CHOICE)
     area_of_specialization = forms.CharField(required = False)
-    professional_license = forms.FileField(required = True)
+    professional_license = forms.ImageField(required = True)
+
+
     class Meta:
         model = get_user_model()
         fields = ('username', 'email', 'password1', 'password2', 'area_of_expertise', 'area_of_specialization', 'professional_license')

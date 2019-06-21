@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from django.views.generic import ListView, UpdateView
 from .models import BaseUser, ClientUser, ProfessionalUser
+from django.conf import settings
+from django.contrib.auth import get_user_model  
 
 from .models import BaseUser
 from django.urls import reverse_lazy
@@ -46,6 +48,7 @@ class ProfessionalUserRegistrationView(FormView):
     #     return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
+        print("hello")
         user = form.save()
         user.is_professional = True
         user.save()
