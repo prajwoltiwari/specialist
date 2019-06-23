@@ -82,18 +82,3 @@ class ProfessionalUser(models.Model):
 
     def __str__(self):
         return f'{self.user.username} Professional'
-
-
-# class ClientProfile(models.Model):
-#     client_profile = models.OneToOneField(ClientUser, on_delete=models.CASCADE)
-
-#     def __str__(self):
-#         return f'{self.user.username} Client Profile'
-
-
-
-# class ProfessionalProfile(models.Model):
-#     professional_profile = models.OneToOneField(ProfessionalUser, on_delete=models.CASCADE)
-
-#     def __str__(self):
-#         return f'{self.user.username} Professional Profile'

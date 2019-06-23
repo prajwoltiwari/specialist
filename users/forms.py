@@ -6,9 +6,9 @@ from django.db import transaction
 
 
 class UserRegistrationFrom(UserCreationForm):
-    first_name = forms.CharField(max_length = 30, required = False, help_text = 'Optional')
-    last_name = forms.CharField(max_length = 30, required = False, help_text = 'Optional')
-    email = forms.EmailField(max_length = 256, help_text = 'Required Field. Please enter a valid email address.')
+    first_name = forms.CharField(max_length = 30, required = False)
+    last_name = forms.CharField(max_length = 30, required = False)
+    email = forms.EmailField(max_length = 256)
 
     class Meta:
         model = get_user_model()
@@ -22,6 +22,12 @@ class ClientUserRegistrationFrom(UserCreationForm):
     class Meta:
         model = get_user_model()
         fields = ('username', 'email', 'password1', 'password2',)
+        
+    def __init__(self, *args, **kwargs):
+        super(ClientUserRegistrationFrom, self).__init__(*args, **kwargs)
+        self.fields['password1'].help_text = ''
+        self.fields['password2'].help_text = ''
+        self.fields['username'].help_text = ''
 
 
 class ProfessionalUserRegistrationFrom(UserCreationForm):
@@ -39,13 +45,17 @@ class ProfessionalUserRegistrationFrom(UserCreationForm):
         ('programmer', 'programmer')
     )
     area_of_expertise = forms.ChoiceField(choices = AREA_OF_EXPERTISE_CHOICE)
-    area_of_specialization = forms.CharField(required = False)
     professional_license = forms.ImageField(required = True)
-
-
+    
     class Meta:
         model = get_user_model()
-        fields = ('username', 'email', 'password1', 'password2', 'area_of_expertise', 'area_of_specialization', 'professional_license')
+        fields = ('username', 'email', 'password1', 'password2', 'area_of_expertise', 'professional_license')
+
+    def __init__(self, *args, **kwargs):
+        super(ProfessionalUserRegistrationFrom, self).__init__(*args, **kwargs)
+        self.fields['password1'].help_text = ''
+        self.fields['password2'].help_text = ''
+        self.fields['username'].help_text = ''
         
     # @transaction.atomic
     # def save(self):
