@@ -58,9 +58,19 @@ class ProfessionalUserRegistrationView(FormView):
         return redirect('home')
 
 
-class HomeListView(ListView):
+class HomeListView(ListView, ):
     model = BaseUser
     template_name = 'users/home.html'
+
+
+class ProfileView(ListView):
+    model = BaseUser
+    template_name = 'users/profile.html'
+
+
+class CatagoryDetailView(ListView):
+    model = BaseUser
+    template_name = 'users/catagory_detail.html'
 
 
 class UserUpdateView(UpdateView):

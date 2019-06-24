@@ -37,6 +37,7 @@ class BaseUser(AbstractUser):
     address = models.CharField(max_length=100)
     phone_number = models.IntegerField(null=True)
     email_address = models.EmailField()
+    phone_number = models.IntegerField(null=True)
     image = models.ImageField(default='default_profile_picture.jpg', upload_to='project_pics')
 
     is_client = models.BooleanField(default=False)
