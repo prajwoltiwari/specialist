@@ -1,8 +1,9 @@
 from django.contrib.auth import login, authenticate
-from .forms import UserRegistrationFrom, UserDetailUpdateForm, ClientUserRegistrationFrom, ProfessionalUserRegistrationFrom
+from .forms import UserRegistrationFrom, ClientUserRegistrationFrom, ProfessionalUserRegistrationFrom, ProfessionalUserDetailUpdateForm
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
-from django.views.generic import ListView, UpdateView
+from django.views.generic import ListView, UpdateView, DetailView
 from .models import BaseUser, ClientUser, ProfessionalUser
 from django.conf import settings
 from django.contrib.auth import get_user_model  
@@ -42,11 +43,9 @@ class ProfessionalUserRegistrationView(FormView):
     model = BaseUser
     form_class = ProfessionalUserRegistrationFrom
     template_name = 'users/professional_register.html'
-
     # def get_context_data(self, **kwargs):
     #     kwargs['user_type'] = 'professional'
     #     return super().get_context_data(**kwargs)
-
     def form_valid(self, form):
         print("hello")
         user = form.save()
@@ -63,9 +62,17 @@ class HomeListView(ListView, ):
     template_name = 'users/home.html'
 
 
-class ProfileView(ListView):
+class ProfileView(LoginRequiredMixin, DetailView):
     model = BaseUser
     template_name = 'users/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        context['expertise'] = ProfessionalUser.objects.all()
+        return context
+
+    success_url = reverse_lazy('profile', kwargs={'pk': 1})
+    
 
 
 class CatagoryDetailView(ListView):
@@ -75,6 +82,6 @@ class CatagoryDetailView(ListView):
 
 class UserUpdateView(UpdateView):
     model = BaseUser
-    form_class = UserDetailUpdateForm
+    form_class = ProfessionalUserDetailUpdateForm
     template_name = 'users/user_detail_update.html'
     success_url = reverse_lazy('home')

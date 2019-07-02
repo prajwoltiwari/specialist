@@ -68,11 +68,13 @@ class ProfessionalUserRegistrationFrom(UserCreationForm):
     #     professional.professional_license.add(self.cleaned_data.get('professional_license'))
 
 
-class UserDetailUpdateForm(forms.ModelForm):
+class ProfessionalUserDetailUpdateForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = [
             'fullname',
             'address',
             'image',
+            'phone_number',
+            'description',
         ]
