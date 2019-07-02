@@ -34,7 +34,7 @@ class MyUserManager(BaseUserManager):
 
 class BaseUser(AbstractUser):
     fullname = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
+    hospital_address = models.CharField(max_length=100)
     phone_number = models.IntegerField(null=True)
     email_address = models.EmailField()
     description = models.TextField(blank=True)

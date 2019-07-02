@@ -1,5 +1,5 @@
 from django.contrib.auth import login, authenticate
-from .forms import UserRegistrationFrom, ClientUserRegistrationFrom, ProfessionalUserRegistrationFrom, ProfessionalUserDetailUpdateForm
+from .forms import UserRegistrationFrom, ClientUserRegistrationFrom, ProfessionalUserRegistrationFrom, ProfessionalUserProfileUpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
@@ -63,15 +63,14 @@ class HomeListView(ListView, ):
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
-    model = BaseUser
+    model = ProfessionalUser
     template_name = 'users/profile.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(ProfileView, self).get_context_data(**kwargs)
-        context['expertise'] = ProfessionalUser.objects.all()
-        return context
-
-    success_url = reverse_lazy('profile', kwargs={'pk': 1})
+    # def get_context_data(self, **kwargs):
+    #     context = super(ProfileView, self).get_context_data(**kwargs)
+    #     context['expertise_type'] = ProfessionalUser.objects.all()
+    #     return context
+        # success_url = reverse_lazy('profile', kwargs={'pk': self.object.pk})
     
 
 
@@ -82,6 +81,6 @@ class CatagoryDetailView(ListView):
 
 class UserUpdateView(UpdateView):
     model = BaseUser
-    form_class = ProfessionalUserDetailUpdateForm
+    form_class = ProfessionalUserProfileUpdateForm
     template_name = 'users/user_detail_update.html'
     success_url = reverse_lazy('home')

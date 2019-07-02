@@ -13,10 +13,12 @@
           <img src="../../../media/default_profile_picture.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
         </div>
         <div class="name">
-          <h4 class="title">{{username}}
+          
+          <h4 class="title">{{ request.user.username }}
             <br />
           </h4>
-          <h6 class="description">{{expertise}}</h6>
+          
+          <h6 class="description">{{ object.area_of_expertise }}</h6>
         </div>
       </div>
       <div class="row">
@@ -54,39 +56,51 @@
                         <br/>
                         <small>This Specialist is very special. He is very very talented!!!</small>
                       </h6>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-4  ml-auto mr-auto">
-                      <div class="form-check">
-                        <label class="form-check-label">
-                          <input class="form-check-input" type="checkbox" value="" checked>
-                          <span class="form-check-sign"></span>
-                        </label>
-                      </div>
-                    </div>
+                    </div>                  
                   </div>
                 </li>
                 <hr />
                 <li>
                   <div class="row">
-                    <div class="col-lg-2 col-md-4 col-4 mx-auto ">
+                    <div class="col-lg-2 col-md-4 col-4 ml-auto mx-auto ">
                       <img src="../../../media/default_profile_picture.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
                     </div>
-                    <div class="col-lg-7 col-md-4 col-4">
+                    <div class="col-lg-7 col-md-4 col-4 ml-auto mr-auto">
                       <h6>User 2
                         <br />
                         <small>Singer</small>
                       </h6>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-4">
-                      <div class="form-check">
-                        <label class="form-check-label">
-                          <input class="form-check-input" type="checkbox" value="">
-                          <span class="form-check-sign"></span>
-                        </label>
-                      </div>
-                    </div>
+                    </div>                   
                   </div>
                 </li>
+                <hr />
+                <li>
+                  <div class="row">
+                    <div class="col-lg-2 col-md-4 col-4 ml-auto mx-auto ">
+                      <p><b>Your post</b></p>
+                    </div>
+                    <div class="col-lg-7 col-md-4 col-4 ml-auto mr-auto">
+                      <p><span id='display'></span></p>
+                    </div>
+                    <p><span id='display'></span></p>              
+                  </div>
+                </li>
+                </br>
+                <li>
+                    <div class="row">
+                      <div class="col-lg-2 col-md-4 col-4 ml-auto mx-auto ">
+                        <h6>Review : </h6>
+                      </div>
+                      <div class="col-lg-7 col-md-4 col-4 ml-auto mr-auto">
+                        <form>
+                          <!-- <input type="text" name="message" id="user_input"> -->
+                          <textarea name="message" id="user_input"></textarea>
+                        </form>
+                        </br>
+                        <input type="submit" onclick="showInput();"><br/>
+                      </div>                   
+                    </div>
+                  </li>
               </ul>
             </div>
           </div>
@@ -126,5 +140,16 @@
         </div>
     </div>
 </footer>
+
+<script language="JavaScript">
+  function showInput() {
+    document.getElementById('display').innerHTML =
+      document.getElementById("user_input").value;
+    document.getElementById("user_input").value= "";
+  }
+
+</script>
+
+
 
 {% endblock %}

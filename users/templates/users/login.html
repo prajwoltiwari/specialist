@@ -4,28 +4,6 @@
 
 {% block content %}
 
-    <!-- <div class="content-section">
-        <form method='POST'>
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Log In</legend>
-                {{ form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Login</button>
-                <small class="text-muted ml=2">
-                    <a href="#">Forgot Password?</a>
-                </small>
-            </div>
-        </form>
-        <div class="border-top pt-3">
-            <small class="text-muted">
-                Need an account? <a class="ml-2" href="{% url 'register' %}">Sign Up</a>
-            </small>
-        </div>
-    </div> -->
-
-
     <div class="page-header" style="background-image: url('../../../media/1.jpg'); ">
         <div class="filter"></div>
         <div class="container">
@@ -46,8 +24,8 @@
                     <div class="border-top pt-3">
                         <div class="text">
                             Don't have an account? <br/><br/>
-                            <a class="ml-2" style="color: antiquewhite; padding: 80px" href="{% url 'client-register' %}">Sign Up an a client</a><br/>
-                            <a class="ml-2" style="color: antiquewhite; padding: 57px" href="{% url 'professional-register' %}">Sign Up an a professional</a>
+                            <a class="ml-2" style="color: antiquewhite; padding: 80px" href="{% url 'profile:client-register' %}">Sign Up an a client</a><br/>
+                            <a class="ml-2" style="color: antiquewhite; padding: 57px" href="{% url 'profile:professional-register' %}">Sign Up an a professional</a>
                         </div>
                     </div>
                 </div>
