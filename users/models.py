@@ -78,7 +78,7 @@ class ProfessionalUser(models.Model):
         ('home_tuition', 'home_tuition'),
         ('programmer', 'programmer')
     )
-    area_of_expertise = models.CharField(max_length=20, choices=AREA_OF_EXPERTISE_CHOICE, default='doctor')
+    area_of_expertise = models.CharField(max_length=20, choices=AREA_OF_EXPERTISE_CHOICE)
     area_of_specialization = models.TextField(blank=True)
     professional_license = models.ImageField(upload_to='license_files')
 

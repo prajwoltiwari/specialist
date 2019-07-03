@@ -21,7 +21,7 @@ class UserRegistrationView(FormView):
         raw_password = form.cleaned_data.get('password1')
         user = authenticate(username = username, password = raw_password)
         login(self.request, user)
-        return redirect('home')
+        return redirect('profile:home')
 
 
 class ClientUserRegistrationView(FormView):
@@ -36,7 +36,7 @@ class ClientUserRegistrationView(FormView):
         client = ClientUser.objects.create(user=user)
         client.save()
         login(self.request, user)
-        return redirect('home')
+        return redirect('profile:home')
 
 
 class ProfessionalUserRegistrationView(FormView):
@@ -50,15 +50,18 @@ class ProfessionalUserRegistrationView(FormView):
         print("hello")
         user = form.save()
         user.is_professional = True
+        x = form.cleaned_data['professional_license']
+        y = form.cleaned_data['area_of_expertise']
         user.save()
-        professional = ProfessionalUser.objects.create(user=user)
+        professional = ProfessionalUser.objects.create(user=user, professional_license=x, area_of_expertise=y)
         professional.save()
         login(self.request, user)
-        return redirect('home')
+        return redirect('profile:home')
 
 
-class HomeListView(ListView, ):
+class HomeListView(LoginRequiredMixin, ListView):
     model = BaseUser
+    login_url = '/'
     template_name = 'users/home.html'
 
 
@@ -83,4 +86,4 @@ class UserUpdateView(UpdateView):
     model = BaseUser
     form_class = ProfessionalUserProfileUpdateForm
     template_name = 'users/user_detail_update.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('profile:home')
