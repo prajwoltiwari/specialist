@@ -71,16 +71,34 @@ class ProfessionalUser(models.Model):
     user = models.OneToOneField(BaseUser, on_delete=models.CASCADE, related_name = 'professional', primary_key=True)
     # is_professional = models.BooleanField(default=False)
     AREA_OF_EXPERTISE_CHOICE = (
-        ('doctor', 'doctor'),
-        ('lawyer', 'lawyer'),
-        ('therapist', 'therapist'),
-        ('personal_trainer', 'personal_trainer'),
-        ('home_tuition', 'home_tuition'),
-        ('programmer', 'programmer')
+        ('Cardiologist', 'Cardiologist'),
+        ('Neurologist', 'Neurologist'),
+        ('Paediatrician', 'Paediatrician'),
+        ('Gastrologist', 'Gastrologist'),
+        ('Gynecologist', 'Gynecologist'),
+        ('Dermatologist', 'Dermatologist'),
+        ('Oncologist', 'Oncologist'),
+        ('Dentist', 'Dentist')
+    )
+    HOSPITAL_LIST=(
+        ('Teaching Hospital', 'Teaching Hospital'),
+        ('Chitwan Medical College', 'Chitwan Medical College'),
+        ('Gandaki Medical College', 'Gandaki Medical College'),
+        ('Manipal Teaching Hospital', 'Manipal Teaching Hospital'),
+        ('Sahid Gangalal Memorial Hopital', 'Sahid Gangalal Memorial Hopital'),
+        ('Teku Hospital', 'Teku Hospital'),
+        ('Patan Hospital', 'Patan Hospital'),
+        ('BnB Hospital', 'BnB Hospital'),
+        ('Dhulikhel Hospital', 'Dhulikhel Hospital'),
+        ('Nepal Cardio Center', 'Nepal Cardio Center'),
+        ('Bhaktapur Cancer HospitalL', 'Bhaktapur Cancer HospitalL'),
+        ('Grande International Hospital', 'Grande International Hospital')
     )
     area_of_expertise = models.CharField(max_length=20, choices=AREA_OF_EXPERTISE_CHOICE)
     area_of_specialization = models.TextField(blank=True)
+    hospital = models.CharField(max_length=100, choices=HOSPITAL_LIST)
     professional_license = models.ImageField(upload_to='license_files')
+    verified = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.user.username} Professional'

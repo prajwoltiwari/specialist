@@ -3,39 +3,41 @@
 
 {% block content %}
 
-<div class="page-header page-header-xs" data-parallax="true" style="background-image: url('../../../media/default_profile_picture.jpg');">
+<div class="page-header page-header-xs" data-parallax="true" style="background-image: url('../../../media/31.jpg');">
     <div class="filter"></div>
   </div>
-  <div class="section profile-content">
+  <div class="section profile-content" style="background: #f4f4f4">
     <div class="container">
       <div class="owner">
         <div class="avatar">
-          <img src="../../../media/default_profile_picture.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+          <img src="../../../media/33.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
         </div>
-        <div class="name">
-          
-          <h4 class="title">{{ request.user.username }}
-            <br />
-          </h4>
-          
-          <h6 class="description">{{ object.area_of_expertise }}</h6>
+        {% if object.verified == True %}
+          <div class="name">
+              <h3 class="title">{{ request.user.username }} - {{ object.area_of_expertise }}</h3></br>
+            </div>
+          </div>
+        <div class="row">
+          <div class="col-md-6 ml-auto mr-auto text-center">
+            <p>{{ object.area_of_specialization }}</p>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 ml-auto mr-auto text-center">
-          <p>An artist of considerable range, Jane Faker — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. </p>
+        {% else %}
+          <div class="name">
+            <h3 class="title">{{ request.user.username }} - [Not Verified]</h3></br>
+          </div>
         </div>
-      </div>
+        {% endif %}
       <br/>
       <br/>
+
+
+      {% if object.verified == True %}
       <div class="nav-tabs-navigation">
         <div class="nav-tabs-wrapper">
           <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" data-toggle="tab" href="#follows" role="tab">Review Ratings</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#following" role="tab">Book this Specialist</a>
+              <a class="nav-link active" data-toggle="tab" href="#follows" role="tab">Information</a>
             </li>
           </ul>
         </div>
@@ -49,13 +51,10 @@
                 <li>
                   <div class="row">
                     <div class="col-lg-2 col-md-4 col-4 ml-auto mr-auto">
-                      <img src="../../../media/default_profile_picture.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                      <h5>Hospital</h5>
                     </div>
                     <div class="col-lg-7 col-md-4 col-4  ml-auto mr-auto">
-                      <h6>User 1
-                        <br/>
-                        <small>This Specialist is very special. He is very very talented!!!</small>
-                      </h6>
+                      <h5>{{ object.hospital }}</h5
                     </div>                  
                   </div>
                 </li>
@@ -63,13 +62,75 @@
                 <li>
                   <div class="row">
                     <div class="col-lg-2 col-md-4 col-4 ml-auto mx-auto ">
-                      <img src="../../../media/default_profile_picture.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                        <h5>Open</h5>
                     </div>
                     <div class="col-lg-7 col-md-4 col-4 ml-auto mr-auto">
-                      <h6>User 2
-                        <br />
-                        <small>Singer</small>
-                      </h6>
+                      <h5>10:00 A.M. to 04:00 P.M. (Monday through Thursday)</h5>
+                    </div>                   
+                  </div>
+                </li>
+                <hr />
+                <li>
+                    <div class="row">
+                      <div class="col-lg-2 col-md-4 col-4 ml-auto mr-auto">
+                        <h5>Fee</h5>
+                      </div>
+                      <div class="col-lg-7 col-md-4 col-4  ml-auto mr-auto">
+                        <h5>400 NPR. (General Checkup)</h5>
+                      </div>                  
+                    </div>
+                  </li>
+                </br>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      </br>
+      </br>
+      {% endif %}
+
+
+
+      <div class="nav-tabs-navigation">
+        <div class="nav-tabs-wrapper">
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#follows" role="tab">Review Ratings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#following" role="tab">Book this Doctor</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {% if object.verified == True %}
+      <!-- Tab panes -->
+      <div class="tab-content following">
+        <div class="tab-pane active" id="follows" role="tabpanel">
+          <div class="row">
+            <div class="col-md-10 ml-auto mr-auto">
+              <ul class="list-unstyled follows">
+                <li>
+                  <div class="row">
+                    <div class="col-lg-2 col-md-4 col-4 ml-auto mr-auto">
+                      <img src="../../../media/36.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                    </div>
+                    <div class="col-lg-7 col-md-4 col-4  ml-auto mr-auto">
+                      <h6>Olivia Wilde</h6>
+                      <p>This really takes care of his patients. He is very very talented! A 100% recommended.</p>
+                    </div>                  
+                  </div>
+                </li>
+                <hr />
+                <li>
+                  <div class="row">
+                    <div class="col-lg-2 col-md-4 col-4 ml-auto mx-auto ">
+                      <img src="../../../media/41.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                    </div>
+                    <div class="col-lg-7 col-md-4 col-4 ml-auto mr-auto">
+                      <h6>Harrisson Ford</h6>
+                      <p>This doctor is fine. He doesn't really tries to connect to his patients, but he does his job properly.</p>
                     </div>                   
                   </div>
                 </li>
@@ -106,12 +167,14 @@
           </div>
         </div>
         <div class="tab-pane text-center" id="following" role="tabpanel">
-          <h3 class="text-muted">Not following anyone yet :(</h3>
-          <button class="btn btn-warning btn-round">Find artists</button>
+          <a class="btn btn-warning btn-round" href="{% url 'profile:profile' request.user.pk %}">Book an online session</a>
+          <h6></br>OR</h6></br>
+          <a class="btn btn-warning btn-round" href="{% url 'profile:profile' request.user.pk %}">Book an appointment</a>
         </div>
       </div>
     </div>
   </div>
+  {% endif %}
 
   <footer class="footer   footer-white ">
     <div class="container">
@@ -119,7 +182,7 @@
             <nav class="footer-nav">
                 <ul>
                     <li>
-                        <a href="#" target="_blank">Specialist Portal</a>
+                        <a href="#" target="_blank">Doctor's Portal</a>
                     </li>
                     <li>
                         <a href="#" target="_blank">Blog</a>

@@ -37,19 +37,36 @@ class ProfessionalUserRegistrationFrom(UserCreationForm):
     # fullname = forms.CharField(max_length = 30, required = False, help_text = 'Optional')
     # email = forms.EmailField(max_length = 256, help_text = 'Required Field. Please enter a valid email address.')
     AREA_OF_EXPERTISE_CHOICE = (
-        ('doctor', 'doctor'),
-        ('lawyer', 'lawyer'),
-        ('therapist', 'therapist'),
-        ('personal_trainer', 'personal_trainer'),
-        ('home_tuition', 'home_tuition'),
-        ('programmer', 'programmer')
+        ('Cardiologist', 'Cardiologist'),
+        ('Neurologist', 'Neurologist'),
+        ('Paediatrician', 'Paediatrician'),
+        ('Gastrologist', 'Gastrologist'),
+        ('Gynecologist', 'Gynecologist'),
+        ('Dermatologist', 'Dermatologist'),
+        ('Oncologist', 'Oncologist'),
+        ('Dentist', 'Dentist')
+    )
+    HOSPITAL_LIST=(
+        ('Teaching Hospital', 'Teaching Hospital'),
+        ('Chitwan Medical College', 'Chitwan Medical College'),
+        ('Gandaki Medical College', 'Gandaki Medical College'),
+        ('Manipal Teaching Hospital', 'Manipal Teaching Hospital'),
+        ('Sahid Gangalal Memorial Hopital', 'Sahid Gangalal Memorial Hopital'),
+        ('Teku Hospital', 'Teku Hospital'),
+        ('Patan Hospital', 'Patan Hospital'),
+        ('BnB Hospital', 'BnB Hospital'),
+        ('Dhulikhel Hospital', 'Dhulikhel Hospital'),
+        ('Nepal Cardio Center', 'Nepal Cardio Center'),
+        ('Bhaktapur Cancer HospitalL', 'Bhaktapur Cancer HospitalL'),
+        ('Grande International Hospital', 'Grande International Hospital')
     )
     area_of_expertise = forms.ChoiceField(choices = AREA_OF_EXPERTISE_CHOICE)
+    hospital = forms.ChoiceField(choices = HOSPITAL_LIST)
     professional_license = forms.ImageField(required = True)
     
     class Meta:
         model = get_user_model()
-        fields = ('username', 'email', 'password1', 'password2', 'area_of_expertise', 'professional_license')
+        fields = ('username', 'email', 'password1', 'password2', 'hospital', 'area_of_expertise', 'professional_license')
 
     def __init__(self, *args, **kwargs):
         super(ProfessionalUserRegistrationFrom, self).__init__(*args, **kwargs)

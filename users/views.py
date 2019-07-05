@@ -52,8 +52,9 @@ class ProfessionalUserRegistrationView(FormView):
         user.is_professional = True
         x = form.cleaned_data['professional_license']
         y = form.cleaned_data['area_of_expertise']
+        z = form.cleaned_data['hospital']
         user.save()
-        professional = ProfessionalUser.objects.create(user=user, professional_license=x, area_of_expertise=y)
+        professional = ProfessionalUser.objects.create(user=user, professional_license=x, area_of_expertise=y, hospital=z)
         professional.save()
         login(self.request, user)
         return redirect('profile:home')
@@ -67,6 +68,7 @@ class HomeListView(LoginRequiredMixin, ListView):
 
 class ProfileView(LoginRequiredMixin, DetailView):
     model = ProfessionalUser
+    login_url = '/'
     template_name = 'users/profile.html'
 
     # def get_context_data(self, **kwargs):
@@ -77,8 +79,9 @@ class ProfileView(LoginRequiredMixin, DetailView):
     
 
 
-class CatagoryDetailView(ListView):
+class CatagoryDetailView(LoginRequiredMixin, ListView):
     model = BaseUser
+    login_url = '/'
     template_name = 'users/catagory_detail.html'
 
 
